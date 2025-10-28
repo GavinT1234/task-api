@@ -14,20 +14,24 @@ export async function createTask(req, res, next) {
 export async function getTaskById(req, res, next) {
   const { id } = req.params;
   const parsedId = parseInt(id, 10);
-
+  
   if (isNaN(parsedId)) {
-    return res.status(400).json({ error: 'Invalid task ID' });
+    return res.status(400).json({
+      error: 'Validation failed',
+      details: ['ID must be a number'],
+    });
   }
 
   try {
-    const task = await taskService.getTaskById(parsedId);
+    const task = await taskService.getID(parsedId);
 
     if (!task) {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    res.json(task);
+    return res.status(200).json(task);
   } catch (err) {
-    next(err); 
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 }

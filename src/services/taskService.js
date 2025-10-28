@@ -8,6 +8,6 @@ export async function createTask(newTask) {
   return taskRepository.create(newTask);
 }
 
-export async function getTaskById(id) {
+export async function getID(id) {
   return taskRepository.findById(id);
 }
