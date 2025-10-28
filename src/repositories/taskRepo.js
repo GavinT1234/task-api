@@ -11,9 +11,8 @@ export async function create(data) {
   });
 }
 
-export async function getTaskById(id) {
-  const parsedId = parseInt(id, 10);
-  if (isNaN(parsedId)) return null;
-  return taskRepository.findById(parsedId);
+export async function findById(id) {
+  return prisma.task.findUnique({
+    where: { id },
+  });
 }
-
